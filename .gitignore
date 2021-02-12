@@ -1,0 +1,39 @@
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+# Build results
+
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
+[Bb]in/
+[Oo]bj/
+[Bb]in[Dd]ebug/
+[Bb]in[Rr]elease/
+
+# Packages
+packages/
+/packages/
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+
+# ReSharper is a .NET coding add-in
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# Other
+Thumbs.db
+Desktop.ini
+.vs/
+/dist
+/docs
+
+# Rider/Intellij
+.idea/
+*.lock.json
