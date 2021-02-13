@@ -28,6 +28,13 @@ namespace InternalDslTaskManagement.Builder
             return ServiceProvider.GetRequiredService<ITaskBuilder>().Task(name);
         }
 
+        public void Build()
+        {
+            ServiceProvider.GetRequiredService<ITaskBuilder>().Clear();
+            ServiceProvider.GetRequiredService<ILabelBuilder>().Clear();
+            ServiceProvider.GetRequiredService<ICommentBuilder>().Clear();
+        }
+
         public abstract void Clear();
     }
 }

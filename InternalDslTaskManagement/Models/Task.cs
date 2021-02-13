@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InternalDslTaskManagement.Models
 {
-    public class Task : IEquatable<Task>
+    public class Task : IEquatable<Task>, IUnique<string>
     {
         public Task(string name, string status, DateTime lastStatusUpdateTime, DateTime deadline, string assigned)
         {
@@ -17,18 +17,23 @@ namespace InternalDslTaskManagement.Models
         }
 
         public string Name { get; }
-        public string Status { get; }
-        public DateTime LastStatusUpdateTime { get; }
-        public DateTime Deadline { get; }
-        public string Assigned { get; }
-        public List<Comment> Comments { get; }
-        public List<Label> Labels { get; }
+        public string Status { get; set; }
+        public DateTime LastStatusUpdateTime { get; set; }
+        public DateTime Deadline { get; set; }
+        public string Assigned { get; set; }
+        public List<Comment> Comments { get; set; }
+        public List<Label> Labels { get; set; }
 
         public bool Equals(Task other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return Name == other.Name;
+        }
+
+        public string GetKey()
+        {
+            return Name;
         }
 
         public override bool Equals(object obj)

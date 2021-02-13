@@ -1,6 +1,7 @@
 ﻿using System;
 using InternalDslTaskManagement.Builder.Interfaces;
 using InternalDslTaskManagement.Models;
+using InternalDslTaskManagement.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InternalDslTaskManagement.Builder
@@ -27,9 +28,10 @@ namespace InternalDslTaskManagement.Builder
                 return;
             }
 
-            Console.WriteLine("LabelBuilder->Clear");
             // Save Label
             var newLabel = new Label(LabelName);
+            ServiceProvider.GetRequiredService<ILabelRepository>().Upsert(newLabel);
+            newLabel = ServiceProvider.GetRequiredService<ILabelRepository>().Get(newLabel.GetKey());
             ServiceProvider.GetRequiredService<ITaskBuilderService>().AddLabel(newLabel);
 
             LabelName = null;

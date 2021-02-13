@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace InternalDslTaskManagement.Builder.Interfaces
+﻿namespace InternalDslTaskManagement.Builder.Interfaces
 {
     public interface ICommentBuilder : IFromTaskBuilder
     {
         public ICommentBuilder By(string author);
-        public ICommentBuilder PostedAt(DateTime timestamp);
+        public ICommentBuilder PostedAt(string timestamp);
     }
 }

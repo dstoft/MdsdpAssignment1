@@ -1,5 +1,7 @@
 using InternalDslTaskManagement.Builder;
 using InternalDslTaskManagement.Builder.Interfaces;
+using InternalDslTaskManagement.Dsl;
+using InternalDslTaskManagement.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +22,7 @@ namespace InternalDslTaskManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // https://andrewlock.net/how-to-register-a-service-with-multiple-interfaces-for-in-asp-net-core-di/
             services.AddSingleton<TaskBuilder>();
             services.AddSingleton<IRootBuilder, RootBuilder>();
             services.AddSingleton<ITaskBuilder>(x => x.GetRequiredService<TaskBuilder>());
@@ -27,7 +30,14 @@ namespace InternalDslTaskManagement
             services.AddSingleton<ILabelBuilder, LabelBuilder>();
             services.AddSingleton<ICommentBuilder, CommentBuilder>();
 
-            services.AddControllers();
+            services.AddSingleton<ITaskRepository, TaskRepository>();
+            services.AddSingleton<ILabelRepository, LabelRepository>();
+
+            services.AddSingleton<MdsdHomework>();
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

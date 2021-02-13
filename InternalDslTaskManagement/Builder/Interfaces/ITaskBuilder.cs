@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace InternalDslTaskManagement.Builder.Interfaces
+﻿namespace InternalDslTaskManagement.Builder.Interfaces
 {
     public interface ITaskBuilder : IFromTaskBuilder
     {
-        public ITaskBuilder Deadline(DateTime deadline);
+        public ITaskBuilder Deadline(string deadline);
         public ITaskBuilder Status(string status);
         public ITaskBuilder Assign(string assigned);
     }

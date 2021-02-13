@@ -29,8 +29,6 @@ namespace InternalDslTaskManagement.Builder
                 return;
             }
 
-            Console.WriteLine("CommentBuilder->Clear");
-
             var newComment = new Comment(Author, Content, Timestamp ?? DateTime.Now);
             ServiceProvider.GetRequiredService<ITaskBuilderService>().AddComment(newComment);
 
@@ -45,9 +43,9 @@ namespace InternalDslTaskManagement.Builder
             return this;
         }
 
-        public ICommentBuilder PostedAt(DateTime timestamp)
+        public ICommentBuilder PostedAt(string timestamp)
         {
-            Timestamp = timestamp;
+            Timestamp = DateTime.Parse(timestamp);
             return this;
         }
 

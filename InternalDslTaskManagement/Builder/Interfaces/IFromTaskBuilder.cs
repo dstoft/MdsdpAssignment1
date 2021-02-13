@@ -4,5 +4,6 @@
     {
         public ILabelBuilder Label(string name);
         public ICommentBuilder Comment(string name);
+        public void Build();
     }
 }

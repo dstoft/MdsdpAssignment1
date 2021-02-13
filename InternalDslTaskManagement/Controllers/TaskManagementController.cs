@@ -1,5 +1,6 @@
-﻿using System;
-using InternalDslTaskManagement.Builder.Interfaces;
+﻿using System.Collections.Generic;
+using InternalDslTaskManagement.Dsl;
+using InternalDslTaskManagement.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,24 +10,30 @@ namespace InternalDslTaskManagement.Controllers
     [Route("[controller]")]
     public class TaskManagementController : ControllerBase
     {
-        private readonly IRootBuilder _rootBuilder;
+        private MdsdHomework MdsdHomework;
 
-        public TaskManagementController(IRootBuilder rootBuilder)
+        public TaskManagementController(MdsdHomework mdsdHomework)
         {
-            _rootBuilder = rootBuilder;
+            MdsdHomework = mdsdHomework;
         }
 
-        [HttpGet]
-        public ActionResult<string> Get()
+        [HttpPost]
+        public ActionResult<string> Build()
         {
-            _rootBuilder
-                .Task("Mega wow!").Assign("Daniel").Deadline(DateTime.Now).Status("To-do")
-                .Label("NewLabel")
-                .Comment("Wowowow").By("Dani boi").PostedAt(DateTime.Now)
-                .Comment("Wowowow2").By("Dani boi").PostedAt(DateTime.Now)
-                .Label("NewLabel2").Label("NewLabel3")
-                .Task("New mega wow!");
-            return StatusCode(StatusCodes.Status200OK, "wow, much success");
+            MdsdHomework.Build();
+            return StatusCode(StatusCodes.Status201Created, "Model successfully built!");
+        }
+
+        [HttpGet("tasks")]
+        public ActionResult<ICollection<Task>> ListTasks()
+        {
+            return StatusCode(StatusCodes.Status200OK, MdsdHomework.GetTasks());
+        }
+
+        [HttpGet("labels")]
+        public ActionResult<ICollection<Label>> ListLabels()
+        {
+            return StatusCode(StatusCodes.Status200OK, MdsdHomework.GetLabels());
         }
     }
 }

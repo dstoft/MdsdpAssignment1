@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using InternalDslTaskManagement.Builder.Interfaces;
 using InternalDslTaskManagement.Models;
+using InternalDslTaskManagement.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace InternalDslTaskManagement.Builder
 {
@@ -18,9 +20,9 @@ namespace InternalDslTaskManagement.Builder
         public List<Label> Labels { get; private set; }
         public List<Comment> Comments { get; private set; }
 
-        public ITaskBuilder Deadline(DateTime deadline)
+        public ITaskBuilder Deadline(string deadline)
         {
-            TaskDeadline = deadline;
+            TaskDeadline = DateTime.Parse(deadline);
             return this;
         }
 
@@ -45,11 +47,14 @@ namespace InternalDslTaskManagement.Builder
                 return;
             }
 
-            Console.WriteLine("TaskBuilder->Clear");
             var task = new Task(TaskName, TaskStatus, DateTime.Now, TaskDeadline ?? DateTime.MaxValue, TaskAssigned);
             task.Labels.AddRange(Labels);
             task.Comments.AddRange(Comments);
-            Console.WriteLine(task);
+            ServiceProvider.GetRequiredService<ITaskRepository>().Upsert(task);
+            task = ServiceProvider.GetRequiredService<ITaskRepository>().Get(task.Name);
+            var labelRepository = ServiceProvider.GetRequiredService<ILabelRepository>();
+            Labels.ForEach(label => labelRepository.AddTask(task, label));
+
             TaskName = null;
             TaskDeadline = null;
             TaskStatus = null;
