@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InternalDslTaskManagement.Dsl
 {
-    public abstract class TaskManagement
+    public abstract class TaskManagement : ITaskManagement
     {
         private readonly IServiceProvider ServiceProvider;
         protected readonly IRootBuilder TaskManagementSystem;
@@ -20,14 +20,24 @@ namespace InternalDslTaskManagement.Dsl
 
         public abstract void Build();
 
-        public ICollection<Task> GetTasks()
+        public ICollection<Task> ListTasks()
         {
             return ServiceProvider.GetRequiredService<ITaskRepository>().List();
         }
 
-        public ICollection<Label> GetLabels()
+        public Task GetTask(string name)
+        {
+            return ServiceProvider.GetRequiredService<ITaskRepository>().Get(name);
+        }
+
+        public ICollection<Label> ListLabels()
         {
             return ServiceProvider.GetRequiredService<ILabelRepository>().List();
+        }
+
+        public Label GetLabel(string name)
+        {
+            return ServiceProvider.GetRequiredService<ILabelRepository>().Get(name);
         }
     }
 }

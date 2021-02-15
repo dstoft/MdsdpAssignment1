@@ -1,5 +1,6 @@
 ﻿using System;
 using InternalDslTaskManagement.Builder.Interfaces;
+using InternalDslTaskManagement.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InternalDslTaskManagement.Builder
@@ -15,6 +16,8 @@ namespace InternalDslTaskManagement.Builder
 
         public ITaskBuilder Task(string name)
         {
+            _serviceProvider.GetRequiredService<ITaskRepository>().Truncate();
+            _serviceProvider.GetRequiredService<ILabelRepository>().Truncate();
             return _serviceProvider.GetRequiredService<ITaskBuilder>().Task(name);
         }
 

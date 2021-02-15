@@ -45,5 +45,10 @@ namespace InternalDslTaskManagement.Services
         {
             return Tasks.ContainsKey(key);
         }
+
+        public void Truncate()
+        {
+            Tasks.Clear();
+        }
     }
 }

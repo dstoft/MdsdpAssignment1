@@ -30,9 +30,9 @@ namespace InternalDslTaskManagement.Builder
 
         public void Build()
         {
-            ServiceProvider.GetRequiredService<ITaskBuilder>().Clear();
             ServiceProvider.GetRequiredService<ILabelBuilder>().Clear();
             ServiceProvider.GetRequiredService<ICommentBuilder>().Clear();
+            ServiceProvider.GetRequiredService<ITaskBuilder>().Clear();
         }
 
         public abstract void Clear();

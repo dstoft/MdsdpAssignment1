@@ -37,6 +37,11 @@ namespace InternalDslTaskManagement.Services
             return Labels.ContainsKey(key);
         }
 
+        public void Truncate()
+        {
+            Labels.Clear();
+        }
+
         public void AddTask(Task taskToAdd, Label label)
         {
             Labels[label.GetKey()].Tasks.Add(taskToAdd);

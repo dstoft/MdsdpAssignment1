@@ -8,5 +8,6 @@ namespace InternalDslTaskManagement.Services
         public void Upsert(TModel model);
         public ICollection<TModel> List();
         public bool Exists(TKey key);
+        public void Truncate();
     }
 }

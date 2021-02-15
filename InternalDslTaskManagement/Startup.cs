@@ -34,6 +34,7 @@ namespace InternalDslTaskManagement
             services.AddSingleton<ILabelRepository, LabelRepository>();
 
             services.AddSingleton<MdsdHomework>();
+            services.AddSingleton<HousePeace>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
